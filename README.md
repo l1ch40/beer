@@ -1,6 +1,6 @@
 # Beer
 ## What is Beer
-Beer is a manage local software for running local platform, Written by Golang programming language.
+Beer is a tool for managing local software updates, written in the Golang programming language.
 
 ## Usage
 ````bash
