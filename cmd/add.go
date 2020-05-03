@@ -19,20 +19,27 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+
+	"github.com/lexmovrx/beer/pkg/conf"
 )
 
 // addCmd represents the add command
 var addCmd = &cobra.Command{
 	Use:   "add",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Add local software",
+	Long: `Add the local software you want to manage. 
+For example:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+beer add 3mux 'go get -u github.com/aaronjanse/3mux'`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("add called")
+		if len(args) != 2 {
+			fmt.Print(`pass parameter error.
+For example:
+    beer add name 'update url'
+	`)
+			return
+		}
+		conf.Add(args)
 	},
 }
 

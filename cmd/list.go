@@ -17,6 +17,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/lexmovrx/beer/pkg/conf"
 
 	"github.com/spf13/cobra"
 )
@@ -24,15 +25,26 @@ import (
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "List all software information",
+	Long: `List all software information. For example:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+beer list.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("list called")
+		if len(args) != 0 {
+			fmt.Print(`The Command Error.
+For Example:
+
+beer info git`)
+			return
+		}
+		beers, err := conf.List()
+		if err != nil {
+			fmt.Print(err)
+		} else {
+			for _, beer := range beers {
+				fmt.Printf("The software: %s, update command: '%s'\n", beer.Name, beer.Command)
+			}
+		}
 	},
 }
 

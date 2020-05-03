@@ -17,6 +17,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/lexmovrx/beer/pkg/conf"
 
 	"github.com/spf13/cobra"
 )
@@ -24,15 +25,25 @@ import (
 // infoCmd represents the info command
 var infoCmd = &cobra.Command{
 	Use:   "info",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "List the update commands for the specified software.",
+	Long: `List the update commands for the specified software. For example:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+beer info git.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("info called")
+		if len(args) != 1 {
+			fmt.Print(`The Command Error.
+For Example:
+
+beer info git`)
+			return
+		}
+		value, err := conf.Info(args[0])
+		if err != nil {
+			fmt.Print(err)
+		} else {
+			fmt.Printf(`The %s software update command:
+%s`, args[0], value)
+		}
 	},
 }
 

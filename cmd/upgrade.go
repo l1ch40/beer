@@ -17,6 +17,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/lexmovrx/beer/pkg/conf"
 
 	"github.com/spf13/cobra"
 )
@@ -24,15 +25,19 @@ import (
 // upgradeCmd represents the upgrade command
 var upgradeCmd = &cobra.Command{
 	Use:   "upgrade",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Update the specified software.",
+	Long: `Update the specified software. For example:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+brew upgrade git.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("upgrade called")
+		if len(args) != 1 {
+			fmt.Print(`The Command Error.
+For Example:
+
+beer upgrade git`)
+			return
+		}
+		conf.Upgrade(args[0])
 	},
 }
 
